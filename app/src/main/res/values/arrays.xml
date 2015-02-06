@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="schools">
+        <item>Dornsife College of Letters, Arts, and Sciences</item>
+        <item>Leventhal School of Accounting</item>
+        <item>Viterbi School of Engineering</item>
+    </string-array>
+
+    <string-array name="schools_images">
+        <item>@drawable/dornsife</item>
+        <item>@drawable/accounting</item>
+        <item>@drawable/engineering</item>
+    </string-array>
+
+    <string-array name="menu_items">
+        <item>Department List</item>
+        <item>Saved Classes</item>
+        <item>Calendar View</item>
+    </string-array>
+
+    <string-array name="nav_drawer_icons">
+        <item>@drawable/ic_department</item>
+        <item>@drawable/ic_classes</item>
+        <item>@drawable/ic_calendar</item>
+    </string-array>
+
+    <string-array name="dornsife_schools">
+        <item>American Language Institute (ALI)</item>
+        <item>American Studies and Ethnicity (AMST)</item>
+        <item>Anthropology (ANTH)</item>
+    </string-array>
+
+    <string-array name="leventhal_schools">
+        <item>Accounting (ACCT)</item>
+    </string-array>
+
+    <string-array name="viterbi_schools">
+        <item>Aerospace and Mechanical Engineering (AME)</item>
+        <item>Astronautical Engineering (ASTE)</item>
+        <item>Computer Science (CSCI)</item>
+    </string-array>
+</resources>
