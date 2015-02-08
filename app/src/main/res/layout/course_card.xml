@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Card visible layout -->
+    <it.gmariotti.cardslib.library.view.ForegroundLinearLayout
+        android:id="@+id/card_main_layout"
+        style="@style/card.native.main_layout_foreground"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <it.gmariotti.cardslib.library.view.component.CardThumbnailView
+            style="@style/card.native.card_thumbnail_outer_layout"
+            android:id="@+id/card_thumbnail_layout"
+            android:layout_width="wrap_content"
+            card:card_thumbnail_layout_resourceID="@layout/native_card_thumbnail_layout"
+            android:layout_height="match_parent"/>
+
+        <!-- Main Content View -->
+        <FrameLayout
+            android:id="@+id/card_main_content_layout"
+            style="@style/card.native.material_large_image_content_outer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="210dp"
+                    android:src="@drawable/check2"
+                    android:layout_margin="0dp"/>
+
+                <LinearLayout android:id="@+id/card_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+
+                    <TextView android:id="@+id/location_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SAL 101"
+                        android:textSize="15dp"
+                        android:drawableLeft="@drawable/ic_location_pin"
+                        android:padding="5dp"
+                        android:drawablePadding="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                    <TextView android:id="@+id/time_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10:00-10:50"
+                        android:textSize="32sp"
+                        android:fontFamily="sans-serif-light"
+                        android:drawableLeft="@drawable/ic_clock"
+                        android:padding="5dp"
+                        android:drawablePadding="10dp"/>
+
+                    <TextView android:id="@+id/date_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_calendar_date"
+                        android:text="MWF"
+                        android:textSize="24sp"
+                        android:fontFamily="sans-serif-thin"
+                        android:padding="5dp"
+                        android:drawablePadding="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_teacher"
+                        android:text="Redekopp, Mark"
+                        android:padding="5dp"
+                        android:textSize="24sp"
+                        android:fontFamily="sans-serif-thin"
+                        android:drawablePadding="10dp"/>
+
+                </LinearLayout>
+
+                </LinearLayout>
+
+        </FrameLayout>
+
+
+    </it.gmariotti.cardslib.library.view.ForegroundLinearLayout>
+
+    <ViewStub
+        android:id="@+id/card_supplemental_actions_vs"
+        android:inflatedId="@+id/card_supplemental_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
