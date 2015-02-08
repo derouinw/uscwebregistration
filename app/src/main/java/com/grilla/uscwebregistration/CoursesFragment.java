@@ -86,8 +86,34 @@ public class CoursesFragment extends Fragment {
             }
         });
 
-       CourseCard card = CourseCard.with(getActivity()).setupSupplementalActions(R.layout.course_actions, actions).build();
-        ((CardViewNative)rootView.findViewById(R.id.card)).setCard(card);
+        CharSequence loc1 = "SAL 101";
+        CharSequence time1 = "10:00-10:50";
+        CharSequence date1 = "MWF";
+        CharSequence teacher1 = "Redekopp, Mark";
+
+        CharSequence loc2 = "SGM 124";
+        CharSequence time2 = "1:00-2:50";
+        CharSequence date2 = "TH";
+        CharSequence teacher2 = "Crowley, Michael";
+
+        CourseCard card1 = CourseCard.with(getActivity())
+                .setLocationText(loc1)
+                .setTimeText(time1)
+                .setDateText(date1)
+                .setTeacherText(teacher1)
+                .setupSupplementalActions(R.layout.course_actions, actions)
+                .build();
+        //card1.setupInnerViewElements(container, inflater.inflate(R.layout.course_card, container));
+
+        CourseCard card2 = CourseCard.with(getActivity())
+                .setLocationText(loc2)
+                .setTimeText(time2)
+                .setDateText(date2)
+                .setTeacherText(teacher2)
+                .build();
+        //card2.setupInnerViewElements(container, inflater.inflate(R.layout.course_card, container));
+
+        ((CardViewNative)rootView.findViewById(R.id.card)).setCard(card2);
         return rootView;
     }
 }
