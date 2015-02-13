@@ -1,6 +1,7 @@
 package com.grilla.uscwebregistration;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.grilla.uscwebregistration.views.SectionCard;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +27,9 @@ import it.gmariotti.cardslib.library.cards.actions.TextSupplementalAction;
 import it.gmariotti.cardslib.library.cards.base.BaseMaterialCard;
 import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
 import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
+import it.gmariotti.cardslib.library.view.CardListView;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
 public class CoursesFragment extends Fragment {
@@ -37,6 +41,7 @@ public class CoursesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_courses, container, false);
+        Context c = getActivity().getApplicationContext();
 
         /*school = savedInstanceState.getString(ARG_SCHOOL);
         String request = "http://petri.usc.edu/socAPI/Courses/" + JSONHelper.term + "/" + school;
@@ -96,7 +101,7 @@ public class CoursesFragment extends Fragment {
         CharSequence date2 = "TH";
         CharSequence teacher2 = "Crowley, Michael";
 
-        CourseCard card1 = CourseCard.with(getActivity())
+        /*CourseCard card1 = CourseCard.with(getActivity())
                 .setLocationText(loc1)
                 .setTimeText(time1)
                 .setDateText(date1)
@@ -113,7 +118,34 @@ public class CoursesFragment extends Fragment {
                 .build();
         //card2.setupInnerViewElements(container, inflater.inflate(R.layout.course_card, container));
 
-        ((CardViewNative)rootView.findViewById(R.id.card)).setCard(card2);
+        SectionCard card3 = new SectionCard(getActivity().getApplicationContext());
+        card3.setmLocationText(loc2);
+        card3.setmTimeText(time2);
+        card3.setmDateText(date2);
+        card3.setmTeacherText(teacher2);
+
+        Card card4 = new Card(getActivity(), R.layout.drawer_list_item);
+
+        //((CardViewNative) rootView.findViewById(R.id.card)).setCard(card3);
+        CardViewNative cardView = (CardViewNative)rootView.findViewById(R.id.card);
+        cardView.setCard(card4);*/
+
+        ArrayList<Card> cards = new ArrayList<>();
+        Card card = new Card(getActivity());
+        card.setInnerLayout(R.layout.section_card_inner);
+        cards.add(card);
+
+        SectionCard card3 = new SectionCard(getActivity());
+        card3.setmLocationText(loc2);
+        card3.setmTimeText(time2);
+        card3.setmDateText(date2);
+        card3.setmTeacherText(teacher2);
+        cards.add(card3);
+
+        CardArrayAdapter adapter = new CardArrayAdapter(getActivity(), cards);
+        CardListView listView = (CardListView)rootView.findViewById(R.id.card_list);
+        listView.setAdapter(adapter);
+
         return rootView;
     }
 }
