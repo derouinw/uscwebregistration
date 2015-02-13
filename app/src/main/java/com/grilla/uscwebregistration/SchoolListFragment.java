@@ -18,15 +18,15 @@ import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
-public class DepartmentFragment extends Fragment {
+public class SchoolListFragment extends Fragment {
 
-    public DepartmentFragment(){}
+    public SchoolListFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_department, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_school_list, container, false);
 
         // Total number of actions for all cards
         /*ArrayList<ArrayList<BaseSupplementalAction>> actionses = new ArrayList<ArrayList<BaseSupplementalAction> >();
@@ -127,7 +127,7 @@ public class DepartmentFragment extends Fragment {
 
             card.setOnClickListener(new CardClickListener((String)schools.getText(i), i, this));
 
-            LinearLayout holder = (LinearLayout)getActivity().getLayoutInflater().inflate(R.layout.dept_card, null);
+            LinearLayout holder = (LinearLayout)getActivity().getLayoutInflater().inflate(R.layout.school_card, null);
             CardViewNative layoutCard = (CardViewNative)holder.getChildAt(0);
             layoutCard.setCard(card);
             holder.removeAllViews();
@@ -143,7 +143,7 @@ public class DepartmentFragment extends Fragment {
     public void showSchools(int college) {
         String[] schools;
 
-        // get schools based on selected college
+        // get departments based on selected college
         switch(college) {
             case 0:
                 // Dornsife
@@ -162,8 +162,8 @@ public class DepartmentFragment extends Fragment {
                 break;
         }
 
-        Intent intent = new Intent(getActivity(), SchoolsActivity.class);
-        intent.putExtra(SchoolsFragment.ARG_SCHOOLS, schools);
+        Intent intent = new Intent(getActivity(), DepartmentsActivity.class);
+        intent.putExtra(DepartmentsFragment.ARG_DEPARTMENTS, schools);
         startActivity(intent);
 
     }

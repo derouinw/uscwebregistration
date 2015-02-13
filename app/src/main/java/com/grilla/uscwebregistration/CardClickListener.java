@@ -8,9 +8,9 @@ import it.gmariotti.cardslib.library.internal.Card;
 public class CardClickListener implements Card.OnCardClickListener {
     private String name;
     private int college;
-    private DepartmentFragment df;
+    private SchoolListFragment df;
 
-    public CardClickListener(String name, int college, DepartmentFragment df) {
+    public CardClickListener(String name, int college, SchoolListFragment df) {
         this.name = name;
         this.college = college;
         this.df = df;
