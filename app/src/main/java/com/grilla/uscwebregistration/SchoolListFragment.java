@@ -28,72 +28,6 @@ public class SchoolListFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_school_list, container, false);
 
-        // Total number of actions for all cards
-        /*ArrayList<ArrayList<BaseSupplementalAction>> actionses = new ArrayList<ArrayList<BaseSupplementalAction> >();
-
-        // Dornsife
-        ArrayList<BaseSupplementalAction> actions = new ArrayList<BaseSupplementalAction>();
-        TextSupplementalAction dt1 = new TextSupplementalAction(getActivity(), R.id.text1);
-        dt1.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                Toast.makeText(getActivity(), " Dornsife SHARE ", Toast.LENGTH_SHORT).show();
-            }
-        });
-        actions.add(dt1);
-
-        TextSupplementalAction dt2 = new TextSupplementalAction(getActivity(), R.id.text2);
-        dt2.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                Toast.makeText(getActivity()," Dornsife LEARN ",Toast.LENGTH_SHORT).show();
-            }
-        });
-        actions.add(dt2);
-        actionses.add(actions);
-
-        // Leventhal
-        ArrayList<BaseSupplementalAction> actions2 = new ArrayList<BaseSupplementalAction>();
-        TextSupplementalAction lt1 = new TextSupplementalAction(getActivity(), R.id.text1);
-        lt1.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                Toast.makeText(getActivity(), " Leventhal SHARE ", Toast.LENGTH_SHORT).show();
-            }
-        });
-        actions2.add(lt1);
-
-        TextSupplementalAction lt2 = new TextSupplementalAction(getActivity(), R.id.text2);
-        lt2.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                Toast.makeText(getActivity()," Leventhal LEARN ",Toast.LENGTH_SHORT).show();
-            }
-        });
-        actions2.add(lt2);
-        actionses.add(actions2);
-
-        // Viterbi
-        ArrayList<BaseSupplementalAction> actions3 = new ArrayList<BaseSupplementalAction>();
-        TextSupplementalAction vt1 = new TextSupplementalAction(getActivity(), R.id.text1);
-        vt1.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                Toast.makeText(getActivity(), " Viterbi SHARE ", Toast.LENGTH_SHORT).show();
-            }
-        });
-        actions3.add(vt1);
-
-        TextSupplementalAction vt2 = new TextSupplementalAction(getActivity(), R.id.text2);
-        vt2.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                Toast.makeText(getActivity()," Viterbi LEARN ",Toast.LENGTH_SHORT).show();
-            }
-        });
-        actions3.add(vt2);
-        actionses.add(actions3);*/
-
         TypedArray schools = getResources().obtainTypedArray(R.array.schools);
         TypedArray schoolsImages = getResources().obtainTypedArray(R.array.schools_images);
 
@@ -125,7 +59,7 @@ public class SchoolListFragment extends Fragment {
                             .setupSupplementalActions(R.layout.horiz_text, actions)
                             .build();
 
-            card.setOnClickListener(new CardClickListener((String)schools.getText(i), i, this));
+            card.setOnClickListener(new SchoolCardClickListener((String)schools.getText(i), i, this));
 
             LinearLayout holder = (LinearLayout)getActivity().getLayoutInflater().inflate(R.layout.school_card, null);
             CardViewNative layoutCard = (CardViewNative)holder.getChildAt(0);
@@ -140,7 +74,7 @@ public class SchoolListFragment extends Fragment {
         return rootView;
     }
 
-    public void showSchools(int college) {
+    public void showDepartments(int college) {
         String[] schools;
 
         // get departments based on selected college

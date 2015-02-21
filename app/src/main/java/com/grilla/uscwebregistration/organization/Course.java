@@ -32,6 +32,7 @@ public class Course {
 
     // add'l data
     private Activity activity;
+    public boolean isLoaded = false;
 
     /**
      * Constructor, takes the course ID and activity
@@ -55,7 +56,7 @@ public class Course {
      * @see Section
      */
     private void loadCourseAndSectionData() {
-        String request = JSONHelper.COURSES_URL + courseID;
+        String request = JSONHelper.COURSES_URL + String.format("%d",(long)courseID);
 
         RequestQueue queue = Volley.newRequestQueue(activity);
 
@@ -109,6 +110,8 @@ public class Course {
                                 Section temp = new Section(termCode, courseID, sisCourseID, name, section, session, maxUnits /* or minUnits? */, type, beginTime, endTime, day, registered, seats, instructor, location);
                                 sections[i] = temp;
                             }
+
+                            isLoaded = true;
 
                         } catch (JSONException e) {
                             e.printStackTrace();

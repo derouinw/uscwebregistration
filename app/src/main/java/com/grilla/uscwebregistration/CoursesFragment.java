@@ -3,7 +3,6 @@ package com.grilla.uscwebregistration;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.grilla.uscwebregistration.organization.Course;
+import com.grilla.uscwebregistration.organization.Section;
 import com.grilla.uscwebregistration.views.SectionCard;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,17 +26,16 @@ import java.util.ArrayList;
 
 import it.gmariotti.cardslib.library.cards.actions.BaseSupplementalAction;
 import it.gmariotti.cardslib.library.cards.actions.TextSupplementalAction;
-import it.gmariotti.cardslib.library.cards.base.BaseMaterialCard;
-import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
-import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.view.CardListView;
-import it.gmariotti.cardslib.library.view.CardViewNative;
 
 public class CoursesFragment extends Fragment {
     public String ARG_SCHOOL = "com.grilla.uscwebregistration.ARG_SCHOOL";
     private String school;
+    private ArrayList<Card> cards;
+
+    private ArrayList<Course> courses;
 
     public CoursesFragment() {}
 
@@ -73,7 +74,7 @@ public class CoursesFragment extends Fragment {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);*/
 
-        ArrayList<BaseSupplementalAction> actions = new ArrayList<>();
+        /*ArrayList<BaseSupplementalAction> actions = new ArrayList<>();
         TextSupplementalAction dt1 = new TextSupplementalAction(getActivity(), R.id.course_register);
         dt1.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
             @Override
@@ -89,7 +90,7 @@ public class CoursesFragment extends Fragment {
             public void onClick(Card card, View view) {
                 Toast.makeText(getActivity()," SAVE ",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         CharSequence loc1 = "SAL 101";
         CharSequence time1 = "10:00-10:50";
@@ -122,7 +123,7 @@ public class CoursesFragment extends Fragment {
         card3.setmLocationText(loc2);
         card3.setmTimeText(time2);
         card3.setmDateText(date2);
-        card3.setmTeacherText(teacher2);
+        card3.setmInstructorText(teacher2);
 
         Card card4 = new Card(getActivity(), R.layout.drawer_list_item);
 
@@ -130,8 +131,9 @@ public class CoursesFragment extends Fragment {
         CardViewNative cardView = (CardViewNative)rootView.findViewById(R.id.card);
         cardView.setCard(card4);*/
 
-        ArrayList<Card> cards = new ArrayList<>();
-        Card card = new Card(getActivity());
+        cards = new ArrayList<>();
+        courses = new ArrayList<>();
+        /*Card card = new Card(getActivity());
         card.setInnerLayout(R.layout.section_card_inner);
         cards.add(card);
 
@@ -139,13 +141,61 @@ public class CoursesFragment extends Fragment {
         card3.setmLocationText(loc2);
         card3.setmTimeText(time2);
         card3.setmDateText(date2);
-        card3.setmTeacherText(teacher2);
-        cards.add(card3);
+        card3.setmInstructorText(teacher2);
+        cards.add(card3);*/
 
         CardArrayAdapter adapter = new CardArrayAdapter(getActivity(), cards);
         CardListView listView = (CardListView)rootView.findViewById(R.id.card_list);
         listView.setAdapter(adapter);
 
+        String request = JSONHelper.COURSES_URL + "CSCI";
+        RequestQueue queue = Volley.newRequestQueue(c);
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, request,
+                new Response.Listener<String>() {
+
+                    public void onResponse(String response) {
+                        System.out.println("Response is: " + response);
+
+                        try {
+                            JSONArray ja = new JSONArray(response);
+                            populateCards(ja);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {}
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
         return rootView;
+    }
+
+    private void populateCards(JSONArray response) {
+        /*try {
+            for (int i = 0; i < response.length(); i++) {
+                Double courseID = response.getJSONObject(i).getDouble("COURSE_ID");
+
+                Course course = new Course(courseID, getActivity());
+                courses.add(course);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < courses.size(); i++) {
+            Course course = courses.get(i);
+            Section[] sections = course.getSections();
+            for (int j = 0; j < sections.length; j++) {
+                Section section = sections[j];
+                SectionCard card = new SectionCard(getActivity());
+                card.setSection(section);
+                cards.add(card);
+            }
+        }*/
     }
 }

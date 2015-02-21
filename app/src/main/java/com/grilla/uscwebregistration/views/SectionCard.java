@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import com.grilla.uscwebregistration.R;
+import com.grilla.uscwebregistration.organization.Section;
 
 /**
  * @author Bill Derouin <bill@billderouin.com>
@@ -16,7 +17,9 @@ public class SectionCard extends Card {
     protected CharSequence mLocationText;
     protected CharSequence mTimeText;
     protected CharSequence mDateText;
-    protected CharSequence mTeacherText;
+    protected CharSequence mInstructorText;
+
+    private Section section;
 
     /**
      * Constructor with default section card layout
@@ -47,7 +50,7 @@ public class SectionCard extends Card {
         setOnClickListener(new OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
-                Toast.makeText(getContext(), "Click Listener card=", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Click card " + mTimeText + ", " + mInstructorText, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -68,8 +71,15 @@ public class SectionCard extends Card {
             if (mDateText != null) dateText.setText(mDateText);
 
             TextView teacherText = (TextView)parent.findViewById(R.id.teacher_text);
-            if (mTeacherText != null) teacherText.setText(mTeacherText);
+            if (mInstructorText != null) teacherText.setText(mInstructorText);
         }
+    }
+
+    private void loadSectionData() {
+        mLocationText = section.getLocation();
+        mTimeText = section.getBeginTime() + " - " + section.getEndTime();
+        mDateText = section.getDay();
+        mInstructorText = section.getInstructor();
     }
 
 
@@ -97,11 +107,20 @@ public class SectionCard extends Card {
         this.mDateText = mDateText;
     }
 
-    public CharSequence getmTeacherText() {
-        return mTeacherText;
+    public CharSequence getmInstructorText() {
+        return mInstructorText;
     }
 
-    public void setmTeacherText(CharSequence mTeacherText) {
-        this.mTeacherText = mTeacherText;
+    public void setmInstructorText(CharSequence mInstructorText) {
+        this.mInstructorText = mInstructorText;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
+        loadSectionData();
     }
 }

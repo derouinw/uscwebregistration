@@ -14,17 +14,22 @@ public class JSONHelper {
     /**
      * Url to call a courses query
      */
-    public static String COURSES_URL = API_URL + "/Courses/" + term + "/";
+    public static String COURSES_URL = API_URL + "Courses/" + term + "/";
+
+    /**
+     * Url to call a sections query
+     */
+    public static String SECTIONS_URL = API_URL + "Sections/";
 
      /**
      * Url to load schools/departments for a single school (if school given)
      */
-    public static String SCHOOLS_URL = API_URL + "/Schools/";
+    public static String SCHOOLS_URL = API_URL + "Schools/";
 
     /**
      * Url to load term data for term(s)
      */
-    public static String TERMS_URL = API_URL + "/Terms/";
+    public static String TERMS_URL = API_URL + "Terms/";
 
     /**
      * Compares two times given in a string format, for example
@@ -55,4 +60,37 @@ public class JSONHelper {
         else
             return -1;
     }
+
+    /* Generic code for http request */
+    /*
+
+
+
+    String request = JSONHelper.COURSES_URL;
+    RequestQueue queue = Volley.newRequestQueue(context);
+
+    // Request a string response from the provided URL.
+    StringRequest stringRequest = new StringRequest(Request.Method.GET, request,
+            new Response.Listener<String>() {
+
+                public void onResponse(String response) {
+                    System.out.println("Response is: " + response);
+
+                    try {
+                        JSONObject jo = new JSONObject(response);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {}
+    });
+    // Add the request to the RequestQueue.
+    queue.add(stringRequest);
+
+
+
+    */
 }

@@ -5,12 +5,12 @@ import android.view.View;
 import it.gmariotti.cardslib.library.internal.Card;
 
 // Listen for the click event on a card
-public class CardClickListener implements Card.OnCardClickListener {
+public class SchoolCardClickListener implements Card.OnCardClickListener {
     private String name;
     private int college;
     private SchoolListFragment df;
 
-    public CardClickListener(String name, int college, SchoolListFragment df) {
+    public SchoolCardClickListener(String name, int college, SchoolListFragment df) {
         this.name = name;
         this.college = college;
         this.df = df;
@@ -18,6 +18,6 @@ public class CardClickListener implements Card.OnCardClickListener {
 
     @Override
     public void onClick(Card card, View view) {
-        df.showSchools(college);
+        df.showDepartments(college);
     }
 }

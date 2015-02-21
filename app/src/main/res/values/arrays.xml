@@ -37,6 +37,6 @@
     <string-array name="viterbi_schools">
         <item>Aerospace and Mechanical Engineering (AME)</item>
         <item>Astronautical Engineering (ASTE)</item>
-        <item>Computer Science (CSCI)</item>
+        <item>CSCI</item>
     </string-array>
 </resources>

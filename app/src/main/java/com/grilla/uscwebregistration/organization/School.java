@@ -1,6 +1,7 @@
 package com.grilla.uscwebregistration.organization;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,6 +14,8 @@ import com.grilla.uscwebregistration.JSONHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.grilla.uscwebregistration.R;
 
 /**
  * @author Bill Derouin <bill@billderouin.com>

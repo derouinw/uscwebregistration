@@ -20,13 +20,6 @@ public class DepartmentsFragment extends Fragment {
     public DepartmentsFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //if (savedInstanceState == null) savedInstanceState = getArguments();
-        //if (savedInstanceState != null) departments = savedInstanceState.getStringArray(ARG_DEPARTMENTS);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (savedInstanceState == null) savedInstanceState = getArguments();
         if (savedInstanceState != null) departments = savedInstanceState.getStringArray(ARG_DEPARTMENTS);
@@ -38,7 +31,7 @@ public class DepartmentsFragment extends Fragment {
         if (savedInstanceState != null) departments = savedInstanceState.getStringArray(ARG_DEPARTMENTS);
 
         ListView schoolsList = (ListView)rootView.findViewById(R.id.departments_list);
-        ArrayAdapter<String> arrayAdpt = new ArrayAdapter<String>(c, R.layout.schools_list_item, departments);
+        ArrayAdapter<String> arrayAdpt = new ArrayAdapter<>(c, R.layout.schools_list_item, departments);
         schoolsList.setAdapter(arrayAdpt);
         schoolsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
