@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 
 public class DepartmentsActivity extends ActionBarActivity {
-    public static final String ARG_SCHOOL = "com.grilla.uscwebregistration.ARG_SCHOOL";
     String[] departments;
     String school;
 
@@ -27,15 +26,15 @@ public class DepartmentsActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent incoming = getIntent();
-        departments = incoming.getStringArrayExtra(DepartmentsFragment.ARG_DEPARTMENTS);
-        school = incoming.getStringExtra(ARG_SCHOOL);
+        school = incoming.getStringExtra(DepartmentsFragment.ARG_SCHOOL_CODE);
+        setTitle(school);
 
         DepartmentsFragment departmentsFragment = new DepartmentsFragment();
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
         Bundle args = new Bundle();
-        args.putStringArray(DepartmentsFragment.ARG_DEPARTMENTS, departments);
+        args.putString(DepartmentsFragment.ARG_SCHOOL_CODE, school);
         departmentsFragment.setArguments(args);
 
         ft.add(R.id.departments_frame, departmentsFragment);

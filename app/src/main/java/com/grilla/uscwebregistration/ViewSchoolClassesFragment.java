@@ -1,11 +1,18 @@
 package com.grilla.uscwebregistration;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -14,7 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.grilla.uscwebregistration.organization.Course;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,30 +37,37 @@ public class ViewSchoolClassesFragment extends Fragment {
     public static final String ARG_SCHOOL_NAME = "com.grilla.uscwebregistration.ARG_SCHOOL_NAME";
     private String schoolName;
 
-    private ArrayList<Card> cards;
+    private ArrayAdapter<String> courseAdapter;
+    Course[] courses;
 
     public ViewSchoolClassesFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (savedInstanceState == null) savedInstanceState = getArguments();
         if (savedInstanceState != null) schoolName = savedInstanceState.getString(ARG_SCHOOL_NAME);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_school_classes, container, false);
         Context c = getActivity().getApplicationContext();
 
-        TextView schoolNameView = (TextView)rootView.findViewById(R.id.school_name);
-        schoolNameView.setText(schoolName);
+        courseAdapter = new ArrayAdapter<>(c, R.layout.schools_list_item);
 
-        CardArrayAdapter adapter = new CardArrayAdapter(getActivity(), cards);
-        CardListView listView = (CardListView)rootView.findViewById(R.id.card_list);
-        listView.setAdapter(adapter);
+        ListView listView = (ListView)rootView.findViewById(R.id.courses_list);
+        listView.setAdapter(courseAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Course course = courses[position];
+
+                Intent intent = new Intent(getActivity(), ViewCourseActivity.class);
+                intent.putExtra(ViewCourseActivity.ARG_COURSE_ID, course.getCourseID());
+
+                startActivity(intent);
+            }
+        });
 
         String request = JSONHelper.COURSES_URL + schoolName;
+        Log.d("ViewSchoolClasses", request);
         RequestQueue queue = Volley.newRequestQueue(c);
 
         // Request a string response from the provided URL.
@@ -59,10 +75,10 @@ public class ViewSchoolClassesFragment extends Fragment {
                 new Response.Listener<String>() {
 
                     public void onResponse(String response) {
-                        System.out.println("Response is: " + response);
+                        Log.d("ViewSchoolClasses", "Loaded course data");
 
                         try {
-                            JSONObject jo = new JSONObject(response);
+                            JSONArray jo = new JSONArray(response);
                             loadCourses(jo);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -78,7 +94,21 @@ public class ViewSchoolClassesFragment extends Fragment {
         return rootView;
     }
 
-    private void loadCourses(JSONObject response) {
+    private void loadCourses(JSONArray response) throws JSONException {
+        courses = new Course[response.length()];
+        courseAdapter.clear();
 
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject course = response.getJSONObject(i);
+
+            double courseId = course.getDouble("COURSE_ID");
+            String sisCourseId = course.getString("SIS_COURSE_ID");
+            String title = course.getString("TITLE");
+
+            courses[i] = new Course(courseId, getActivity());
+            courseAdapter.add(sisCourseId + ": " + title);
+        }
+
+        courseAdapter.notifyDataSetChanged();
     }
 }
