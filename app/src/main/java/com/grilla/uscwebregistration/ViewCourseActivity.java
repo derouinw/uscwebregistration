@@ -10,17 +10,24 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import com.grilla.uscwebregistration.organization.Section;
+import com.grilla.uscwebregistration.views.SectionCard;
+
 import java.util.ArrayList;
 
+import it.gmariotti.cardslib.library.internal.Card;
 
-public class ViewCourseActivity extends ActionBarActivity {
+
+public class ViewCourseActivity extends ActionBarActivity implements LectureCardClickListener {
     public static final String ARG_COURSE_ID = "com.grilla.uscwebregistration.ARG_COURSE_ID";
+    public static final String ARG_SECTIONS = "com.grilla.uscwebregistration.ARG_SECTIONS";
 
     DrawerLayout drawerLayout;
     CalendarView calendarDrawer;
@@ -40,6 +47,7 @@ public class ViewCourseActivity extends ActionBarActivity {
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         mTitle = mDrawerTitle = (String)getTitle();
+        setTitle("Course View");
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.text));
@@ -47,7 +55,7 @@ public class ViewCourseActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+        /*drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar,
                 R.string.app_name, // nav drawer open - description for accessibility
                 R.string.app_name // nav drawer close - description for accessibility
@@ -64,10 +72,10 @@ public class ViewCourseActivity extends ActionBarActivity {
                 invalidateOptionsMenu();
             }
         };
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.setDrawerListener(drawerToggle);*/
 
         Intent incoming = getIntent();
-        String courseID = String.valueOf(incoming.getDoubleExtra(ARG_COURSE_ID, -1));
+        String courseID = String.format("%d",(long)incoming.getDoubleExtra(ARG_COURSE_ID, -1));
 
         CourseViewFragment courseViewFragment = new CourseViewFragment();
         FragmentManager fm = getFragmentManager();
@@ -100,8 +108,27 @@ public class ViewCourseActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLectureClick(Section[] sections, SectionCard card) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+
+        SectionAddlFragment f = new SectionAddlFragment();
+        Bundle args = new Bundle();
+
+        args.putParcelableArray(ARG_SECTIONS, sections);
+        f.setArguments(args);
+
+        ft.replace(R.id.course_container, f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

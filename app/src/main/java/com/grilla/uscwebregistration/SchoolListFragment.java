@@ -188,7 +188,7 @@ public class SchoolListFragment extends Fragment {
                     MaterialLargeImageCard.with(getActivity())
                             .setTextOverImage(schoolDescription)
                             .useDrawableId(getResourceId(schoolImages.get(schoolCode), "drawable", getActivity().getPackageName()))
-                            .setupSupplementalActions(R.layout.horiz_text, actions)
+                            /*.setupSupplementalActions(R.layout.horiz_text, actions)*/
                             .build();
 
             card.setOnClickListener(new SchoolCardClickListener(schoolDescription, i, this));

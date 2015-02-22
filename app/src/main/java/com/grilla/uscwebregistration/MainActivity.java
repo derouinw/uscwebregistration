@@ -39,6 +39,9 @@ public class MainActivity extends ActionBarActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
+        View drawerHeader = getLayoutInflater().inflate(R.layout.navigation_drawer_header, null);
+        drawerList.addHeaderView(drawerHeader);
+
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // load slide menu items
@@ -162,15 +165,20 @@ public class MainActivity extends ActionBarActivity {
         Fragment fragment = null;
         switch (position) {
             case 0:
+            case 1:
                 fragment = new SchoolListFragment();
                 showSearch = true;
                 break;
-            case 1:
+            case 2:
                 fragment = new CoursesFragment();
                 showSearch = false;
                 break;
-            case 2:
+            case 3:
                 fragment = new CalendarFragment();
+                showSearch = false;
+                break;
+            case 4:
+                fragment = new AboutFragment();
                 showSearch = false;
                 break;
 
@@ -189,6 +197,7 @@ public class MainActivity extends ActionBarActivity {
             // update selected item and title, then close the drawer
             drawerList.setItemChecked(position, true);
             drawerList.setSelection(position);
+            position = (position <= 1) ? 0 : position-1;
             getSupportActionBar().setTitle(navMenuTitles[position]);
             drawerLayout.closeDrawer(drawerList);
         } else {

@@ -12,9 +12,8 @@
     <string name="title_activity_schools">SchoolsActivity</string>
     <string name="title_activity_view_course">ViewCourseActivity</string>
 
-    <string name="hello_world">Hello world!</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_grilla">Designed by Grilla in Los Angeles</string>
+    <string name="names">Coding: Bill Derouin, Design: Grant Gliner</string>
+    <string name="icons">Icons from The Noun Project</string>
 
 </resources>

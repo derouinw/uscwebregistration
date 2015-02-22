@@ -27,12 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
-import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
-import it.gmariotti.cardslib.library.view.CardListView;
-
 public class ViewSchoolClassesFragment extends Fragment {
     public static final String ARG_SCHOOL_NAME = "com.grilla.uscwebregistration.ARG_SCHOOL_NAME";
     private String schoolName;
@@ -76,6 +70,7 @@ public class ViewSchoolClassesFragment extends Fragment {
 
                     public void onResponse(String response) {
                         Log.d("ViewSchoolClasses", "Loaded course data");
+                        System.out.println(response);
 
                         try {
                             JSONArray jo = new JSONArray(response);

@@ -1,11 +1,14 @@
 package com.grilla.uscwebregistration.organization;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.grilla.uscwebregistration.JSONHelper;
 
 /**
  * @author Bill Derouin <bill @ billderouin.com>
  */
-public class Section {
+public class Section implements Parcelable {
     // API data
     private String termCode;
     private double courseID;
@@ -52,7 +55,7 @@ public class Section {
      */
     public boolean isConflicting(Section other) {
         return (JSONHelper.compareTimes(beginTime, other.beginTime) < 0 && JSONHelper.compareTimes(beginTime, other.endTime) < 0)
-            && (JSONHelper.compareTimes(endTime, other.beginTime) > 0 && JSONHelper.compareTimes(endTime, other.endTime) > 0);
+                && (JSONHelper.compareTimes(endTime, other.beginTime) > 0 && JSONHelper.compareTimes(endTime, other.endTime) > 0);
     }
 
     public String getTermCode() {
@@ -174,4 +177,63 @@ public class Section {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String toString() {
+        return "Section " + getCourseID() + ": " + getBeginTime() + " - " + getEndTime() + "; " + getInstructor();
+    }
+
+    protected Section(Parcel in) {
+        termCode = in.readString();
+        courseID = in.readDouble();
+        sisCourseID = in.readString();
+        name = in.readString();
+        section = in.readString();
+        session = in.readString();
+        unitCode = in.readDouble();
+        type = in.readString();
+        beginTime = in.readString();
+        endTime = in.readString();
+        day = in.readString();
+        registered = in.readDouble();
+        seats = in.readDouble();
+        instructor = in.readString();
+        location = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(termCode);
+        dest.writeDouble(courseID);
+        dest.writeString(sisCourseID);
+        dest.writeString(name);
+        dest.writeString(section);
+        dest.writeString(session);
+        dest.writeDouble(unitCode);
+        dest.writeString(type);
+        dest.writeString(beginTime);
+        dest.writeString(endTime);
+        dest.writeString(day);
+        dest.writeDouble(registered);
+        dest.writeDouble(seats);
+        dest.writeString(instructor);
+        dest.writeString(location);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Section> CREATOR = new Parcelable.Creator<Section>() {
+        @Override
+        public Section createFromParcel(Parcel in) {
+            return new Section(in);
+        }
+
+        @Override
+        public Section[] newArray(int size) {
+            return new Section[size];
+        }
+    };
 }

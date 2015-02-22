@@ -8,6 +8,6 @@
     <color name="text_dark">#000000</color>
     <color name="text_muted">#b5b5b5</color>
 
-    <color name="list_background">#2a2a2a</color>
+    <color name="list_background">#eee</color>
     <color name="list_background_pressed">#6b6b6b</color>
 </resources>
