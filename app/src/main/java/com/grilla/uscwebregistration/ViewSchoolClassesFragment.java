@@ -1,12 +1,16 @@
 package com.grilla.uscwebregistration;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,6 +54,17 @@ public class ViewSchoolClassesFragment extends Fragment {
 
         ListView listView = (ListView)rootView.findViewById(R.id.courses_list);
         listView.setAdapter(courseAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Course course = courses[position];
+
+                Intent intent = new Intent(getActivity(), ViewCourseActivity.class);
+                intent.putExtra(ViewCourseActivity.ARG_COURSE_ID, course.getCourseID());
+
+                startActivity(intent);
+            }
+        });
 
         String request = JSONHelper.COURSES_URL + schoolName;
         Log.d("ViewSchoolClasses", request);
