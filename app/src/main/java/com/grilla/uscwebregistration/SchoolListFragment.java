@@ -24,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import it.gmariotti.cardslib.library.cards.actions.BaseSupplementalAction;
 import it.gmariotti.cardslib.library.cards.actions.TextSupplementalAction;
@@ -35,8 +37,36 @@ public class SchoolListFragment extends Fragment {
     School[] schools;
     View rootView;
     LinearLayout cardsLayout;
+    Map<String, String> schoolImages;
 
-    public SchoolListFragment(){}
+
+    public SchoolListFragment(){
+        schoolImages = new HashMap<String, String>();
+        schoolImages.put("ACAD", "@drawable/innovation");
+        schoolImages.put("ACCT", "accounting");
+        schoolImages.put("ANSC", "communication__journalism");
+        schoolImages.put("ARCH", "architecture");
+        schoolImages.put("BUAD", "business");
+        schoolImages.put("CNTV", "cinema");
+        schoolImages.put("DANC", "dance");
+        schoolImages.put("DENT", "dentistry");
+        schoolImages.put("DHRP", "physical_therapy");
+        schoolImages.put("EDUC", "teaching");
+        schoolImages.put("ENGR", "engineering");
+        schoolImages.put("FA", "fine_art");
+        schoolImages.put("GE", "ge");
+        schoolImages.put("GERO", "gerontology");
+        schoolImages.put("GRAD", "grad");
+        schoolImages.put("LAS", "dornsife");
+        schoolImages.put("LAW", "law");
+        schoolImages.put("MED", "medicine");
+        schoolImages.put("MUS", "music");
+        schoolImages.put("OT", "occupational");
+        schoolImages.put("PHAR", "pharmacy");
+        schoolImages.put("PPD", "public_policy");
+        schoolImages.put("SOWK", "social_work");
+        schoolImages.put("THTR", "drama");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,6 +144,16 @@ public class SchoolListFragment extends Fragment {
         return rootView;
     }
 
+    public int getResourceId(String pVariableName, String pResourcename, String pPackageName)
+    {
+        try {
+            return getResources().getIdentifier(pVariableName, pResourcename, pPackageName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     private void loadSchoolsData(JSONArray jo) throws JSONException {
         schools = new School[jo.length()];
         TypedArray schoolsImages = getResources().obtainTypedArray(R.array.schools_images);
@@ -147,7 +187,7 @@ public class SchoolListFragment extends Fragment {
             MaterialLargeImageCard card =
                     MaterialLargeImageCard.with(getActivity())
                             .setTextOverImage(schoolDescription)
-                            .useDrawableId(schoolsImages.getResourceId(0, -1)) // TODO: set correct images
+                            .useDrawableId(getResourceId(schoolImages.get(schoolCode), "drawable", getActivity().getPackageName()))
                             .setupSupplementalActions(R.layout.horiz_text, actions)
                             .build();
 
