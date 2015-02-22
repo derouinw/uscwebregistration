@@ -149,7 +149,7 @@ public class CoursesFragment extends Fragment {
         listView.setAdapter(adapter);
 
         String request = JSONHelper.COURSES_URL + "CSCI";
-        RequestQueue queue = Volley.newRequestQueue(c);
+        RequestQueue queue = JSONSingleton.getInstance(c).getRequestQueue();
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, request,

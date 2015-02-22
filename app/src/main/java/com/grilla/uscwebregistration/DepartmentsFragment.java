@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 public class DepartmentsFragment extends Fragment {
     public final static String ARG_DEPARTMENTS = "com.grilla.uscwebregistration.ARG_DEPARTMENTS";
+    public static final String ARG_SCHOOL_CODE = "com.grilla.uscwebregistration.ARG_SCHOOL_CODE";
 
     private String[] departments;
 

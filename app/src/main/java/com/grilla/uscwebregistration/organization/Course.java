@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.grilla.uscwebregistration.JSONHelper;
+import com.grilla.uscwebregistration.JSONSingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +45,11 @@ public class Course {
     public Course(double courseID, Activity activity) {
         this.courseID = courseID;
         this.activity = activity;
-        loadCourseAndSectionData();
+        //loadCourseAndSectionData();
+    }
+
+    private void loadCourseData() {
+
     }
 
     /**
@@ -58,7 +63,7 @@ public class Course {
     private void loadCourseAndSectionData() {
         String request = JSONHelper.COURSES_URL + String.format("%d",(long)courseID);
 
-        RequestQueue queue = Volley.newRequestQueue(activity);
+        RequestQueue queue = JSONSingleton.getInstance(activity).getRequestQueue();
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, request,

@@ -2,6 +2,7 @@ package com.grilla.uscwebregistration.organization;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.grilla.uscwebregistration.JSONSingleton;
 import com.grilla.uscwebregistration.R;
 
 /**
@@ -48,14 +50,14 @@ public class School {
      */
     public void loadDepartments() {
         String request = JSONHelper.SCHOOLS_URL + socSchoolCode;
-        RequestQueue queue = Volley.newRequestQueue(activity);
+        RequestQueue queue = JSONSingleton.getInstance(activity).getRequestQueue();
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, request,
                 new Response.Listener<String>() {
 
                     public void onResponse(String response) {
-                        System.out.println("Response is: " + response);
+                        Log.d("School", "Loaded department data");
 
                         try {
                             JSONArray ja = new JSONArray(response);

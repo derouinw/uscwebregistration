@@ -12,6 +12,12 @@
         <item>@drawable/engineering</item>
     </string-array>
 
+    <string-array name="schools_codes">
+        <item>LAS</item>
+        <item>ACCT</item>
+        <item>ENGR</item>
+    </string-array>
+
     <string-array name="menu_items">
         <item>Department List</item>
         <item>Saved Classes</item>

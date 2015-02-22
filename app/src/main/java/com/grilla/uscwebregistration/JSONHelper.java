@@ -67,14 +67,14 @@ public class JSONHelper {
 
 
     String request = JSONHelper.COURSES_URL;
-    RequestQueue queue = Volley.newRequestQueue(context);
+    RequestQueue queue = JSONSingleton.getInstance(c).getRequestQueue();
 
     // Request a string response from the provided URL.
     StringRequest stringRequest = new StringRequest(Request.Method.GET, request,
             new Response.Listener<String>() {
 
                 public void onResponse(String response) {
-                    System.out.println("Response is: " + response);
+                    Log.d("", ""); // optional log message
 
                     try {
                         JSONObject jo = new JSONObject(response);
