@@ -18,15 +18,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.grilla.uscwebregistration.organization.Department;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DepartmentsFragment extends Fragment {
     public static final String ARG_SCHOOL_CODE = "com.grilla.uscwebregistration.ARG_SCHOOL_CODE";
 
-    private String[] departments;
+    private Department[] departments = {};
+    private String[] departmentsNames = {};
     private String school;
+
+    ArrayAdapter<String> arrayAdpt;
 
     public DepartmentsFragment() {}
 
@@ -39,7 +44,7 @@ public class DepartmentsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_departments, container, false);
 
         ListView schoolsList = (ListView)rootView.findViewById(R.id.departments_list);
-        ArrayAdapter<String> arrayAdpt = new ArrayAdapter<>(c, R.layout.schools_list_item, departments);
+        arrayAdpt = new ArrayAdapter<>(c, R.layout.schools_list_item);
         schoolsList.setAdapter(arrayAdpt);
         schoolsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,7 +54,7 @@ public class DepartmentsFragment extends Fragment {
                 ViewSchoolClassesFragment viewSchoolClassesFragment = new ViewSchoolClassesFragment();
 
                 Bundle args = new Bundle();
-                args.putString(ViewSchoolClassesFragment.ARG_SCHOOL_NAME, departments[position]);
+                args.putString(ViewSchoolClassesFragment.ARG_SCHOOL_NAME, departmentsNames[position]);
                 viewSchoolClassesFragment.setArguments(args);
 
                 ft.replace(R.id.departments_frame, viewSchoolClassesFragment);
@@ -66,10 +71,12 @@ public class DepartmentsFragment extends Fragment {
                 new Response.Listener<String>() {
 
                     public void onResponse(String response) {
-                        Log.d("", ""); // optional log message
+                        Log.d("DepartmentsFragment", "Departments data loaded"); // optional log message
 
                         try {
-                            JSONObject jo = new JSONObject(response);
+                            JSONArray jo = new JSONArray(response);
+                            JSONArray ja = jo.getJSONObject(0).getJSONArray("SOC_DEPARTMENT_CODE");
+                            loadDepartmentsData(ja);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -82,11 +89,27 @@ public class DepartmentsFragment extends Fragment {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
-
         return rootView;
     }
 
-    private void loadDepartmentsData(JSONObject jo) {
+    private void loadDepartmentsData(JSONArray jo) throws JSONException {
+        departments = new Department[jo.length()];
+        departmentsNames = new String[jo.length()];
 
+        arrayAdpt.clear();
+
+        for (int i = 0; i < jo.length(); i++) {
+            JSONObject dept = jo.getJSONObject(i);
+
+            String departmentCode = dept.getString("SOC_DEPARTMENT_CODE");
+            String departmentDescription = dept.getString("SOC_DEPARTMENT_DESCRIPTION");
+
+            Department department = new Department(departmentCode, departmentDescription, school);
+            departments[i] = department;
+            departmentsNames[i] = departmentDescription;
+            arrayAdpt.add(departmentDescription);
+        }
+
+        arrayAdpt.notifyDataSetChanged();
     }
 }

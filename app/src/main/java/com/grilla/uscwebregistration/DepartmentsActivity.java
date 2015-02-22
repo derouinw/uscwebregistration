@@ -27,6 +27,7 @@ public class DepartmentsActivity extends ActionBarActivity {
 
         Intent incoming = getIntent();
         school = incoming.getStringExtra(DepartmentsFragment.ARG_SCHOOL_CODE);
+        setTitle(school);
 
         DepartmentsFragment departmentsFragment = new DepartmentsFragment();
         FragmentManager fm = getFragmentManager();
