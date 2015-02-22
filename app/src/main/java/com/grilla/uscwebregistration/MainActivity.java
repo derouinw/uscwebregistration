@@ -162,11 +162,11 @@ public class MainActivity extends ActionBarActivity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new DepartmentFragment();
+                fragment = new SchoolListFragment();
                 showSearch = true;
                 break;
             case 1:
-                fragment = new SavedClassesFragment();
+                fragment = new CoursesFragment();
                 showSearch = false;
                 break;
             case 2:
