@@ -1,5 +1,6 @@
 package com.grilla.uscwebregistration;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardListView;
 
-public class CourseViewFragment extends Fragment {
+public class CourseViewFragment extends Fragment implements SectionCardClickCommunicator {
     private String courseId;
     private Course course;
 
@@ -37,8 +38,10 @@ public class CourseViewFragment extends Fragment {
     private TextView descriptionText;
 
     private Section[] sections;
-    private ArrayList<Card> cards;
+    private ArrayList<Card> lectures;
     CardArrayAdapter adapter;
+
+    private LectureCardClickListener listener;
 
     public CourseViewFragment() {}
 
@@ -51,8 +54,8 @@ public class CourseViewFragment extends Fragment {
         if (savedInstanceState != null) courseId = savedInstanceState.getString(ViewCourseActivity.ARG_COURSE_ID);
         course = new Course(Double.parseDouble(courseId), getActivity());
 
-        cards = new ArrayList<>();
-        adapter = new CardArrayAdapter(getActivity(), cards);
+        lectures = new ArrayList<>();
+        adapter = new CardArrayAdapter(getActivity(), lectures);
         CardListView listView = (CardListView)rootView.findViewById(R.id.section_list);
         listView.setAdapter(adapter);
 
@@ -90,6 +93,16 @@ public class CourseViewFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            listener = (LectureCardClickListener)activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement LectureCardClickListener");
+        }
+    }
+
     private void loadCourseData(JSONObject jo) throws JSONException {
         String sisCourseId = jo.getString("SIS_COURSE_ID");
         String title = jo.getString("TITLE");
@@ -121,7 +134,11 @@ public class CourseViewFragment extends Fragment {
             String session = s.getString("SESSION");
             String type = s.getString("TYPE");
             String beginTime = s.getString("BEGIN_TIME");
+            if (beginTime.contains("||"))
+                beginTime = beginTime.substring(0, beginTime.indexOf("||"));
             String endTime = s.getString("END_TIME");
+            if (endTime.contains("||"))
+                endTime = beginTime.substring(0, endTime.indexOf("||"));
             String day = s.getString("DAY");
             String location = s.getString("LOCATION");
             //double registered = s.getDouble("REGISTERED");
@@ -137,12 +154,20 @@ public class CourseViewFragment extends Fragment {
             Section temp = new Section(termCode, courseID, sisCourseID, name, section, session, maxUnits /* or minUnits? */, type, beginTime, endTime, day, registered, seats, instructor, location);
             sections[i] = temp;
 
-            SectionCard card = new SectionCard(getActivity().getApplicationContext());
-            card.setSection(temp);
-            cards.add(card);
-            adapter.add(card);
+            // only show lectures with instructors in the first view
+            if (!instructor.equals("null") && instructor != null && type.equals("Lecture")) {
+                SectionCard card = new SectionCard(getActivity().getApplicationContext(), this);
+                card.setSection(temp);
+                lectures.add(card);
+                //adapter.add(card);
+            }
         }
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void clickCard(SectionCard card) {
+        listener.onLectureClick(sections, card);
     }
 }

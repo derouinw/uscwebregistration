@@ -1,13 +1,15 @@
 package com.grilla.uscwebregistration.views;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import it.gmariotti.cardslib.library.internal.Card;
+
 import com.grilla.uscwebregistration.R;
+import com.grilla.uscwebregistration.SectionCardClickCommunicator;
 import com.grilla.uscwebregistration.organization.Section;
 
 /**
@@ -20,13 +22,14 @@ public class SectionCard extends Card {
     protected CharSequence mInstructorText;
 
     private Section section;
+    private SectionCardClickCommunicator listener;
 
     /**
      * Constructor with default section card layout
      * @param context
      */
-    public SectionCard(Context context) {
-        this(context, R.layout.section_card_inner);
+    public SectionCard(Context context,SectionCardClickCommunicator listener) {
+        this(context, R.layout.section_card_inner, listener);
     }
 
     /**
@@ -34,8 +37,9 @@ public class SectionCard extends Card {
      * @param context
      * @param innerLayout
      */
-    public SectionCard(Context context, int innerLayout) {
+    public SectionCard(Context context, int innerLayout, SectionCardClickCommunicator listener) {
         super(context, innerLayout);
+        this.listener = listener;
         init();
     }
 
@@ -47,16 +51,12 @@ public class SectionCard extends Card {
         //No Header
 
         //Set a OnClickListener listener
-        setOnClickListener(new OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                Toast.makeText(getContext(), "Click card " + mTimeText + ", " + mInstructorText, Toast.LENGTH_LONG).show();
-            }
-        });
+        setOnClickListener(new SectionCardClickListener(this));
     }
 
     @Override
     public void setupInnerViewElements(ViewGroup parent, View view) {
+
         if (view != null) {
             TextView locationText = (TextView)parent.findViewById(R.id.location_text);
             if (mLocationText != null) locationText.setText(mLocationText);
@@ -119,5 +119,21 @@ public class SectionCard extends Card {
     public void setSection(Section section) {
         this.section = section;
         loadSectionData();
+    }
+
+    private class SectionCardClickListener implements Card.OnCardClickListener {
+        private SectionCard card;
+
+        public SectionCardClickListener(SectionCard card) {
+            super();
+            this.card = card;
+        }
+
+        @Override
+        public void onClick(Card card, View view) {
+            Log.d("SectionCardClick", "Clicked " + this.card.getmTimeText() + ": " + this.card.getmInstructorText());
+
+            listener.clickCard(this.card);
+        }
     }
 }

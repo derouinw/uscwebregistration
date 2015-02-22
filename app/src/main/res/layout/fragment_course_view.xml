@@ -2,12 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.grilla.uscwebregistration.CourseViewFragment"
-    android:orientation="vertical">]
+    android:orientation="vertical">
 
             <it.gmariotti.cardslib.library.view.CardListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="0dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/section_list" />
 
 </LinearLayout>
