@@ -54,7 +54,7 @@ public class DepartmentsFragment extends Fragment {
                 ViewSchoolClassesFragment viewSchoolClassesFragment = new ViewSchoolClassesFragment();
 
                 Bundle args = new Bundle();
-                args.putString(ViewSchoolClassesFragment.ARG_SCHOOL_NAME, departmentsNames[position]);
+                args.putString(ViewSchoolClassesFragment.ARG_SCHOOL_NAME, departments[position].getSocDepartmentCode());
                 viewSchoolClassesFragment.setArguments(args);
 
                 ft.replace(R.id.departments_frame, viewSchoolClassesFragment);
