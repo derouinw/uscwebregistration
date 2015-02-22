@@ -47,7 +47,7 @@ public class ViewCourseActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+        /*drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar,
                 R.string.app_name, // nav drawer open - description for accessibility
                 R.string.app_name // nav drawer close - description for accessibility
@@ -64,7 +64,7 @@ public class ViewCourseActivity extends ActionBarActivity {
                 invalidateOptionsMenu();
             }
         };
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.setDrawerListener(drawerToggle);*/
 
         Intent incoming = getIntent();
         String courseID = String.valueOf(incoming.getDoubleExtra(ARG_COURSE_ID, -1));
@@ -100,6 +100,8 @@ public class ViewCourseActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
