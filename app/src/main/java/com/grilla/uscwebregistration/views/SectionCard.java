@@ -57,9 +57,6 @@ public class SectionCard extends Card {
 
     @Override
     public void setupInnerViewElements(ViewGroup parent, View view) {
-        System.out.println("Setting up");
-
-
         if (view != null) {
             TextView locationText = (TextView)parent.findViewById(R.id.location_text);
             if (mLocationText != null) locationText.setText(mLocationText);

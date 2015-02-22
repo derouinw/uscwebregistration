@@ -40,6 +40,7 @@ public class ViewCourseActivity extends ActionBarActivity {
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         mTitle = mDrawerTitle = (String)getTitle();
+        setTitle("Course View");
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.text));
@@ -67,7 +68,7 @@ public class ViewCourseActivity extends ActionBarActivity {
         drawerLayout.setDrawerListener(drawerToggle);*/
 
         Intent incoming = getIntent();
-        String courseID = String.valueOf(incoming.getDoubleExtra(ARG_COURSE_ID, -1));
+        String courseID = String.format("%d",(long)incoming.getDoubleExtra(ARG_COURSE_ID, -1));
 
         CourseViewFragment courseViewFragment = new CourseViewFragment();
         FragmentManager fm = getFragmentManager();
