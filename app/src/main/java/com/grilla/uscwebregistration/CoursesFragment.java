@@ -133,10 +133,11 @@ public class CoursesFragment extends Fragment {
 
         cards = new ArrayList<>();
         courses = new ArrayList<>();
-        /*Card card = new Card(getActivity());
+        Card card = new Card(getActivity());
         card.setInnerLayout(R.layout.section_card_inner);
         cards.add(card);
 
+        /*
         SectionCard card3 = new SectionCard(getActivity());
         card3.setmLocationText(loc2);
         card3.setmTimeText(time2);
@@ -148,7 +149,7 @@ public class CoursesFragment extends Fragment {
         CardListView listView = (CardListView)rootView.findViewById(R.id.card_list);
         listView.setAdapter(adapter);
 
-        String request = JSONHelper.COURSES_URL + "CSCI";
+        /*String request = JSONHelper.COURSES_URL + "CSCI";
         RequestQueue queue = JSONSingleton.getInstance(c).getRequestQueue();
 
         // Request a string response from the provided URL.
@@ -170,7 +171,7 @@ public class CoursesFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {}
         });
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        queue.add(stringRequest);*/
 
         return rootView;
     }

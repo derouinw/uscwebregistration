@@ -22,12 +22,14 @@
         <item>Department List</item>
         <item>Saved Classes</item>
         <item>Calendar View</item>
+        <item>About</item>
     </string-array>
 
     <string-array name="nav_drawer_icons">
         <item>@drawable/ic_department</item>
         <item>@drawable/ic_classes</item>
         <item>@drawable/ic_calendar</item>
+        <item>@drawable/ic_clock</item>
     </string-array>
 
     <string-array name="dornsife_schools">
