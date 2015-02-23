@@ -32,15 +32,13 @@ public class SectionAddlFragment extends Fragment implements SectionCardClickCom
 
     private CardArrayAdapter adapter;
     private ArrayList<CardSection> cardSections;
+    CardListView listView;
 
     public SectionAddlFragment() {}
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_section_addl, container, false);
-        Context c = getActivity().getApplicationContext();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         // Load section data passed from activity
         if (savedInstanceState == null) savedInstanceState = getArguments();
@@ -53,33 +51,49 @@ public class SectionAddlFragment extends Fragment implements SectionCardClickCom
         for (int i = 0; i < sections.length; i++) {
             Section s = sections[i];
             Log.d("SectionAddlFragment", s.toString());
-            SectionCard sc = new SectionCard(c, this);
+            SectionCard sc = new SectionCard(getActivity().getApplicationContext(), this);
             sc.setSection(s);
             cards.add(sc);
         }
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_section_addl, container, false);
+        Context c = getActivity().getApplicationContext();
 
         // load section cards into adapter
         // its split up into sections (i.e.
         // discussion, lab, etc)
-        adapter = new CardArrayAdapter(c, cards);
-        cardSections = new ArrayList<>();
+
+        /*cardSections = new ArrayList<>();
         cardSections.add(new CardSection(0, "Discussions"));
         cardSections.add(new CardSection(3, "Labs"));
         CardSection[] dummy = new CardSection[cardSections.size()];
 
         SectionedCardAdapter sectionAdapter = new SectionedCardAdapter(c, adapter);
-        sectionAdapter.setCardSections(cardSections.toArray(dummy));
+        sectionAdapter.setCardSections(cardSections.toArray(dummy));*/
 
-        CardListView listView = (CardListView)rootView.findViewById(R.id.other_section_list);
-        //listView.setExternalAdapter(sectionAdapter, adapter);
+        adapter = new CardArrayAdapter(getActivity().getApplicationContext(), cards);
+        listView = (CardListView)rootView.findViewById(R.id.other_section_list);
         listView.setAdapter(adapter);
+        //listView.setExternalAdapter(sectionAdapter, adapter);
+
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
 
     @Override
     public void clickCard(SectionCard card) {
-
+        Log.d("SectionAddlFragment", card.getSection().toString());
     }
 }
